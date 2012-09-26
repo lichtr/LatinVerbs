@@ -26,7 +26,7 @@ def create_stem
   stem
 end
 
-def find_ending
+def find_ending # endings sollten vielleicht sogar in einer prioritätenreihenfolge angeordnet sein. also t und nt zuerst...
   @endings = [
              [ /[om]$/,              #act endings[0] $ = \b
                /(?<=[aei])s$/, # does not match mittis! r-stems= sero needs exception?
