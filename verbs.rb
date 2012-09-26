@@ -67,7 +67,23 @@ building construction (ut homo linguam latinam discens faciat//as a latin learni
 =end
 class Verbs #class name upper case!!
 end
-@endings = [
+def input
+  print "Gib ein verb ein:"
+  @input = gets.downcase.strip
+  @stem = create_stem
+  return true 
+end
+
+
+def create_stem
+  @ending = find_ending
+  stem = @input.clone
+  stem.slice!(@ending)
+  stem
+end
+
+def find_ending
+  @endings = [
              [ /[om]$/,              #act endings[0] $ = \b
                /(?<=[aei])s$/, # does not match mittis! r-stems= sero needs exception?
                /(?<=[aei])t$/,    #alles außer n davor?
@@ -97,22 +113,6 @@ end
               ]
             ]  
             
-def input
-  print "Gib ein verb ein:"
-  @input = gets.downcase.strip
-  create_stem
-  print @stem
-  return true 
-end
-
-
-def create_stem
-  @ending = find_ending
-  @stem = @input.clone
-  @stem.slice!(@ending)
-end
-
-def find_ending
   personal_ending = @endings[0]
   ending = personal_ending.select { |x| @input.match(x) }
   ending[0]
