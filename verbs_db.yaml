@@ -1,9 +1,96 @@
 ---
 ama1:
+- '1'
 - ama
 - amav
 - amat
 dic3:
+- '3'
 - dic
 - dix
 - dict
+audi4:
+- '4'
+- audi
+- audiv
+- audit
+lauda1:
+- '1'
+- lauda
+- laudav
+- laudat
+mone2:
+- '2'
+- mone
+- monu
+- monit
+iube3:
+- '3'
+- iube
+- iuss
+- iuss
+ambula1:
+- '1'
+- ambula
+- ambulav
+- ambulat
+ama1:
+- '1'
+- ama
+- amav
+- amat
+leg3:
+- '3'
+- leg
+- leg
+- lect
+mitt3:
+- '3'
+- mitt
+- mis
+- miss
+dica1:
+- '1'
+- dica
+- dicav
+- dicat
+fac5:
+- '5'
+- fac
+- fec
+- fact
+cap5:
+- '5'
+- cap
+- cep
+- capt
+ita1:
+- '1'
+- ita
+- itav
+- -
+arde2:
+- '2'
+- arde
+- ars
+- -
+ardesc3:
+- '3'
+- ardesc
+- ars
+- -
+ser3:
+- '3'
+- ser
+- seru
+- sert
+ser3:
+- '3'
+- ser
+- sev
+- sat
+tang3:
+- '3'
+- tang
+- tetig
+- tact

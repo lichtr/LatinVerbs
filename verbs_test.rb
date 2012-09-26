@@ -40,31 +40,35 @@ describe "Stem look up" do
       create_stem.must_equal("leg")
     end
 
-    it "legis" do
-      @input = "legis"
-      create_stem.must_equal("leg")
-    end
-
-    it "legit" do
-      @input = "legit"
-      create_stem.must_equal("leg")
-    end
-
-    it "legimus" do
-      @input = "legimus"
-      create_stem.must_equal("leg")
-    end
-
-    it "legitis" do
-      @input = "legitis"
-      create_stem.must_equal("leg")
-    end
-
     it "legunt" do
       @input = "legunt"
-      create_stem.must_equal("leg")
+      create_stem.must_equal("legu")
     end
   end
- 
+end
 
+describe "search the db" do
+  it "should return right hash" do
+    @stem = "ama"
+    look_up_stem.must_equal({"ama1" => ["1", "ama", "amav", "amat"]})
+  end
+
+  it "should return right hash" do
+    @stem = "leg"
+    look_up_stem.must_equal({"leg3" => ["3", "leg", "leg", "lect"]})
+  end
+
+  it "should return empty hash" do
+    @stem = "legi"
+    look_up_stem.must_equal({})
+  end
+end
+
+describe "run tests" do
+  it "should return leg3" do
+    @input = "legis"
+    run_it
+    @string.must_equal({"leg"=>{"leg3"=>["3", "leg", "leg", "lect"]}}) # warum ein Error?? block (2 levels) dürfte ein bug sein!!
+
+  end
 end
