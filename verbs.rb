@@ -16,6 +16,7 @@ def run_it
   found_verbs = iterate_db_search
   check_form(found_verbs)
   print_analyzed_input
+  output
 end
 
 def create_stem
@@ -25,34 +26,34 @@ def create_stem
   stem
 end
 
-def find_ending # endings sollten vielleicht sogar in einer prioritätenreihenfolge angeordnet sein. also t und nt zuerst...
+def find_ending # endings sollten vielleicht sogar in einer prioritï¿½tenreihenfolge angeordnet sein. also t und nt zuerst...
   @endings = [
-             [ /[om]$/,              #act endings[0] $ = \b
-               /(?<=[aei])s$/, # does not match mittis! r-stems= sero needs exception?
-               /(?<=[aei])t$/,    #alles außer n davor?
+             [ /[om]$/, #act endings[0] $ = \b
+               /((?<=([aer])|([^tr]i)|([^aeirsl]ti)|([^aie]ri)|([sft]eri)|(quiri)|(quaeri)|([^c][a-z]peri)|([^a-z]geri)|([^a-z]pari)|([^a-z]meti)))s$/, # does not match mittis! r-stems= sero needs exception?
+               /(?<=[aei])t$/, #alles auÃŸer n davor?
                /mus$/,
                /(?<=[aei])tis$/, #s-problem!!!!
                /(?<=[^(er)][aeiu])nt$/, #dont match perf3rdpl
                /re$/
             ],
              
-             [ "#{/(?<=[^t])/}i#{/\b/}",             #perf. act. perf-stem end on t?
-               "isti#{/\b/}",                         #endings[2]
-               "it#{/\b/}",
-               "imus#{/\b/}",
-               "istis#{/\b/}",
-               "erunt#{/\b/}",
-               "isse#{/\b/}"
+             [ /(?<=[^t])i$/, #perf. act. perf-stem end on t?
+               /isti$/, #endings[2]
+               /it$/,
+               /imus$/,
+               /istis$/,
+               /erunt$/,
+               /isse$/
               ],
              
-             [ "#{/(?<=[aeo])/}r#{/\b/}",             #passiv endings[3]
-               "#{/(?<=[aei])/}ris#{/\b/}",
-               "#{/(?<=[aei])/}tur#{/\b/}",
-               "mur#{/\b/}",
-               "mini#{/\b/}",
-               "ntur#{/\b/}",
-               "ri#{/\b/}",
-               "#{/(?<=[a-mo-z])/}i#{/\b/}"                #alles außer n-vor i. gibt es einen n-stamm?
+             [ /(?<=[aeo])r$/, #passiv endings[3]
+               /((?<=([^p]a)|([^aefgtpsx]e)|([^(qu)]i)|([cr][uia]pe)|([a-z][tg]e)))ris$/,
+               /(?<=[aei])tur$/,
+               /mur$/,
+               /mini$/,
+               /ntur$/,
+               /ri$/,
+               /(?<=[a-mo-z])i$/ #alles auÃŸer n-vor i. gibt es einen n-stamm?
               ]
             ]  
             
@@ -106,6 +107,19 @@ end
 def print_analyzed_input
   analyzed_input = [@found_stem, @binding_voc, @tempus_sign, @ending]
   analyzed_input.reject {|x| x == nil}.join(" - ")
+end
+
+def pers_numerus
+  i = @endings[0].index(@ending)
+  case i  #sg or pl and pers
+    when 0..2 then pers_numerus = "#{i + 1}.Person Singular"
+    when 3..5 then pers_numerus = "#{i - 2}.Person Plural"
+    else pers_numerus = "Infinitiv"
+  end
+end
+
+def output
+  print "\n #{pers_numerus} \n"
 end
 
 if __FILE__ == $PROGRAM_NAME
