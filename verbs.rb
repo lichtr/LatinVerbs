@@ -12,10 +12,10 @@ def input
 end
 
 def run_it
-  @stem = create_stem
+  @input_wo_ending = create_stem
   found_verbs = iterate_db_search
   print found_verbs # nur zur Kontrolle soweit. hier später weiterarbeiten 
-  puts @stem
+  puts @input_wo_ending
   check_form(found_verbs)
 end
 
@@ -64,7 +64,16 @@ end
 
 def iterate_db_search
   found_verbs = {}
-  stem = @stem.clone
+  stem = @input_wo_ending.clone
+  
+  case
+  when @input_wo_ending.match(/e$/)
+    found_verbs[stem] = look_up_stem(stem)
+    stem.chop! << "a"
+  when @input_wo_ending.match(/[^aeiou]$/)
+    stem << "a"
+  end
+
   until stem == ""
     found_verbs[stem] = look_up_stem(stem) #interessantes zum clone verhalten hier.
     stem.chop! 
@@ -82,7 +91,8 @@ def look_up_stem(stem)
 end
 
 def check_form(found_verbs) # hier erst tempuszeichen checken?
-  found_verbs[0] = found_stem
+  found_stem = found_verbs[0]
+  print found_stem
   if found_stem.keys[0].match(/[35]$/)
     check_for_binding_voc(found_stem)
   end 
