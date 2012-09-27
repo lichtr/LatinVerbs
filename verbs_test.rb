@@ -79,4 +79,20 @@ describe "iterate search" do
   it "should return 2 hits" do
 
   end
+
+describe "print analyzed input" do
+  it "should return leg - o" do
+    @found_stem = "leg"
+    @ending = "o"
+    print_analyzed_input.must_equal("leg - o") 
+  end
+
+  it "should return leg - i - s" do
+    @found_stem = "leg"
+    @binding_voc = "i"
+    @ending = "s"
+    print_analyzed_input.must_equal("leg - i - s")
+  end
+end
+
 end

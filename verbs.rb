@@ -14,9 +14,8 @@ end
 def run_it
   @input_wo_ending = create_stem
   found_verbs = iterate_db_search
-  print found_verbs # nur zur Kontrolle soweit. hier später weiterarbeiten 
-  puts @input_wo_ending
   check_form(found_verbs)
+  print_analyzed_input
 end
 
 def create_stem
@@ -91,15 +90,22 @@ def look_up_stem(stem)
 end
 
 def check_form(found_verbs) # hier erst tempuszeichen checken?
-  found_stem = found_verbs[0]
-  print found_stem
-  if found_stem.keys[0].match(/[35]$/)
-    check_for_binding_voc(found_stem)
-  end 
+  @found_stem = found_verbs.keys[0]
+  signs = @input_wo_ending[@found_stem.length..-1]
+  conj = found_verbs[@found_stem].values[0][0]   # almost a hack! check doc why 
+  check_for_signs(signs, conj)
 end
 
-def check_for_binding_voc(found_stem)
-  # found_stem_keys[0][1] compare to @stem => i bleibt über
+def check_for_signs(signs, conj)
+  case 
+  when conj.match(/[35]$/) && signs.match(/^i/)
+    @binding_voc = "i" 
+  end
+end
+
+def print_analyzed_input
+  analyzed_input = [@found_stem, @binding_voc, @tempus_sign, @ending]
+  analyzed_input.reject {|x| x == nil}.join(" - ")
 end
 
 if __FILE__ == $PROGRAM_NAME
