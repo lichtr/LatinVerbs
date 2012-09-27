@@ -15,6 +15,8 @@ def run_it
   @stem = create_stem
   found_verbs = iterate_db_search
   print found_verbs # nur zur Kontrolle soweit. hier später weiterarbeiten 
+  puts @stem
+  check_form(found_verbs)
 end
 
 def create_stem
@@ -62,21 +64,32 @@ end
 
 def iterate_db_search
   found_verbs = {}
-  until @stem == ""
-    found_verbs[@stem] = look_up_stem #interessantes zum clone verhalten hier.
-    @stem.chop! 
+  stem = @stem.clone
+  until stem == ""
+    found_verbs[stem] = look_up_stem(stem) #interessantes zum clone verhalten hier.
+    stem.chop! 
   end
   found_verbs.delete_if {|key, val| val == {} }
 end
 
-def look_up_stem
+def look_up_stem(stem)
   require 'yaml'
   db = File.open("verbs_db.yaml", "r") do |file|
     YAML.load(file)
   end
 
-  db.select { |key, val| val.include? (@stem) }
-  
+  db.select { |key, val| val.include? (stem) }
+end
+
+def check_form(found_verbs) # hier erst tempuszeichen checken?
+  found_verbs[0] = found_stem
+  if found_stem.keys[0].match(/[35]$/)
+    check_for_binding_voc(found_stem)
+  end 
+end
+
+def check_for_binding_voc(found_stem)
+  # found_stem_keys[0][1] compare to @stem => i bleibt über
 end
 
 if __FILE__ == $PROGRAM_NAME

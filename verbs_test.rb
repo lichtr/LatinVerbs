@@ -49,18 +49,15 @@ end
 
 describe "search the db" do
   it "should return right hash" do
-    @stem = "ama"
-    look_up_stem.must_equal({"ama1" => ["1", "ama", "amav", "amat"]})
+    look_up_stem("ama").must_equal({"ama1" => ["1", "ama", "amav", "amat"]})
   end
 
   it "should return right hash" do
-    @stem = "leg"
-    look_up_stem.must_equal({"leg3" => ["3", "leg", "leg", "lect"]})
+    look_up_stem("leg").must_equal({"leg3" => ["3", "leg", "leg", "lect"]})
   end
 
   it "should return empty hash" do
-    @stem = "legi"
-    look_up_stem.must_equal({})
+    look_up_stem("legi").must_equal({})
   end
 end
 
