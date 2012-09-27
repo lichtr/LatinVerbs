@@ -64,11 +64,12 @@ describe "search the db" do
   end
 end
 
-describe "run tests" do
+describe "iterate search" do
   it "should return leg3" do
-    @input = "legis"
-    run_it
-    @string.must_equal({"leg"=>{"leg3"=>["3", "leg", "leg", "lect"]}}) # warum ein Error?? block (2 levels) dürfte ein bug sein!!
+    @stem = "legi"
+    iterate_db_search.must_equal({"leg"=>{"leg3"=>["3", "leg", "leg", "lect"]}}) 
+  end
+  it "should return 2 hits" do
 
   end
 end

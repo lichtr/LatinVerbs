@@ -5,18 +5,16 @@ def input
   print "Gib ein verb ein:"
   @input = gets.downcase.strip
   run_it
+  
+  require 'benchmark'
+  puts "Benchmark: #{Benchmark.realtime { "a"*1_000_000 }} sec"
   return true 
 end
 
 def run_it
   @stem = create_stem
-  found_verbs = {}
-  until @stem == ""
-    found_verbs[@stem] = look_up_stem
-    @stem.chop! 
-  end
-  found_verbs.delete_if {|key, val| val == {} }
-  print found_verbs 
+  found_verbs = iterate_db_search
+  print found_verbs # nur zur Kontrolle soweit. hier später weiterarbeiten 
 end
 
 def create_stem
@@ -60,6 +58,15 @@ def find_ending # endings sollten vielleicht sogar in einer prioritätenreihenfol
   personal_ending = @endings[0].reverse
   ending = personal_ending.select { |x| @input.match(x) }
   ending[0]
+end
+
+def iterate_db_search
+  found_verbs = {}
+  until @stem == ""
+    found_verbs[@stem] = look_up_stem #interessantes zum clone verhalten hier.
+    @stem.chop! 
+  end
+  found_verbs.delete_if {|key, val| val == {} }
 end
 
 def look_up_stem
